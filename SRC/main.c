@@ -6,11 +6,17 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/08/31 11:54:32 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/04 16:19:49 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
+
+/*fonction autorisee : memset, printf, malloc, free, write,
+usleep, gettimeofday, pthread_create,
+pthread_detach, pthread_join, pthread_mutex_init,
+pthread_mutex_destroy, pthread_mutex_lock,
+pthread_mutex_unlock*/
 
 //a regler seg fault au dernier philo au premier make
 
@@ -41,7 +47,8 @@ numéro N - 1 et philosophe numéro N + 1.*/
 /*lancer les threads  dans une autre boucle et faire la routine (eat sleep think) 
 rajouter un mutex pour l ecriture usleep()*/
 
-
+// routinephilo : manger, penser et dormir 
+//(mourir si le temps est depasser )
 void	*routine(t_t table)
 {
 	(void) table;
@@ -51,40 +58,13 @@ void	*routine(t_t table)
 	return NULL;
 }
 
-void fork_init(t_t table)
-{
-	int i;
-
-	i = 0;
-	while(i < table.nb_of_philo)
-	{
-		if (i == table.nb_of_philo - 1)
-			table.p[i].fork_left = table.p[0].fork;
-		printf("")
-		else
-			table.p[i].fork_left = table.p[i + 1].fork;
-		i++;
-	}
-}
-
 int	main(int argc, char **argv)
 {
 	t_t table;
-	if (argc == 1)
-		return(printf("Error -> no arg\n"));
-	table.nb_of_philo = atoi(argv[1]);
-	//printf("nb philo =  %d", table.nb_of_philo);
-	table.nb_of_fork = table.nb_of_philo;
-	//printf("nb fork =  %d", table.nb_of_fork);
-	table.p = malloc(sizeof(t_phil) * table.nb_of_philo);
+	printf("argc = %d\n", argc);
+	check_arg(argc, argv);
+	init_struct(&table, argv);
 	int i = 0;
-	/*while (i != table.nb_of_philo)
-		pthread_create(&table.p.philo, NULL, &routine, NULL);
-	if (argc == 5 || argc == 6)
-	{
-		check_digit(argv);
-	}*/
-	i = 0;
 	while (i < table.nb_of_philo)
 	{
 		table.p[i].fork = malloc(sizeof(pthread_mutex_t));
@@ -94,10 +74,21 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	fork_init(table);
-	/*while (i == table.nb_of_philo)
+	printf("test1\n");
+	/*int ret;
+	while (i == table.nb_of_philo)
 	{
-		if (pthread_join(table.p.philo, NULL) != 0)
+		void *retval;
+		printf("test\n");
+		ret = pthread_join(table.p->philo, &retval);
+		if (retval == PTHREAD_CANCELED)
+            printf("The thread was canceled - ");
+        else
+            printf("Returned value %d - ", (int)retval);
+
+		if(pthread_join(table.p->philo, NULL) != 0)
 			return 2;
+		printf("test\n");
 		printf("Philo %d has finished exec\n", i);
 		i--;
 	}*/

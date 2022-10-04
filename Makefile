@@ -1,5 +1,5 @@
 CC 		= GCC
-CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -pthread #-fsanitize=address
 NAME	= philo
 SRC		= src/main.c src/parse.c src/utils.c
 
