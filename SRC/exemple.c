@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:00:44 by clecat            #+#    #+#             */
-/*   Updated: 2022/06/23 13:50:41 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:04:22 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,22 @@ int main(int argc, char **argv)
 	printf("Number of mails = %d\n", mails);
 	return(0);
 }
+
+
+/* recupere la valeur de retour de pthread join
+int ret;
+while (i == table.nb_of_philo)
+{
+	void *retval;
+	printf("test\n");
+	ret = pthread_join(table.p->philo, &retval);
+	if (retval == PTHREAD_CANCELED)
+		printf("The thread was canceled - ");
+	else
+		printf("Returned value %d - ", (int)retval);
+
+	if(pthread_join(table.p->philo, NULL) != 0)
+		return 2;
+	printf("Philo %d has finished exec\n", i);
+	i--;
+}*/

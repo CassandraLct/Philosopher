@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/04 16:20:06 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:52:50 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <time.h>
+# include <sys/time.h>
+# include <fcntl.h>
 
 //struct philo
 typedef struct	s_phil 
@@ -27,6 +30,7 @@ typedef struct	s_phil
 	int nb_philo;	
 	pthread_mutex_t *fork;
 	pthread_mutex_t *fork_left;
+	struct s_t *access_table;
 }	t_phil;
 
 //structure generale
@@ -36,14 +40,23 @@ typedef struct s_t
     int nb_of_fork;
 	int time_to_eat;
 	int time_to_sleep;
-	int time_to_die;
+	int			time_to_die;
+	int			nb_of_times_each_philo_must_eat;
+	long long	time_of_day;
+	pthread_mutex_t print;
 	t_phil	*p;
 } 	t_t;
 
-void	check_arg(int argc, char **argv);
-int check_digit(char **argv);
-int ft_atoi(const char *str);
-void init_struct(t_t *table, char **argv);
-void fork_init(t_t table);
+int		check_arg(int argc, char **argv);
+int		check_digit(char **argv);
+int		ft_atoi(const char *str);
+int		init_struct(t_t *table, char **argv);
+void	fork_init(t_t table);
+void	*routine(void *arg);
+int		ft_isdigit(int c);
+int		init_philo(t_t *table);
+long    init_ms(void);
+void    ft_usleep(long time);
+void	ft_eat(t_phil philo);
 
 #endif

@@ -6,61 +6,26 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/04 16:21:29 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/05 15:50:36 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
 
-//check que des digit et que 5 ou 6 arg
-int	ft_isdigit(int c)
+int	check_arg(int argc, char **argv)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
-int	check_digit(char **argv)
-{
-	int i;
-	int j;
-	
-	i = 1;
-	j = 0;
-	while(argv[i] != '\0')
-	{
-		while (argv[i][j] != '\0')
-		{
-			if (ft_isdigit(argv[i][j]) == 0)
-				return(1);
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return(0);
-}
-
-void	check_arg(int argc, char **argv)
-{
-	int i = 1;
 	if (argc == 1)
 		printf("Error -> no arg\n");
 	if (argc < 5)
-		write(1, "Missing arguments\n", 18);
+		printf("Missing arguments\n");
 	else if (argc > 6)
-		write(1, "Too much arguments\n", 19);
+		printf("Too much arguments\n");
 	else
 	{
-		while(i != argc)
-		{
-			//printf("i = %d\n", i);
-			if(check_digit(&argv[i]) == 1)
-				printf("argv[%d] is not a digit\n", i);
-			i++;
-		}
+		if(check_digit(argv) == 1)
+			return(1);
 	}
+	return(0);
 }
 
 //init fork left
@@ -69,25 +34,58 @@ void fork_init(t_t table)
 	int i;
 
 	i = 0;
-	while(i < table.nb_of_philo)
+	/*while(i < table.nb_of_philo)
 	{
 		if (i == table.nb_of_philo - 1)
 			table.p[i].fork_left = table.p[0].fork;
 		else
 			table.p[i].fork_left = table.p[i + 1].fork;
 		i++;
-	}
+	}*/
 }
 
 // nb_of_philo ; time_to_die; time_to_eat ; time_to_sleep
-void init_struct(t_t *table, char **argv)
+int init_struct(t_t *table, char **argv)
 {
 	table->nb_of_philo = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
+	if(argv[5])
+		table->nb_of_times_each_philo_must_eat = ft_atoi(argv[5]);
 	table->nb_of_fork = table->nb_of_philo;
-	printf("nb-philo = %d, nb-fork = %d\n", table->nb_of_philo, table->nb_of_fork);
-	printf("timedie = %d, timeeat = %d, timesleep = %d\n", table->time_to_die, table->time_to_eat, table->time_to_sleep);
+	table->time_of_day = init_ms();
 	table->p = malloc(sizeof(t_phil) * table->nb_of_philo);
+	pthread_mutex_init(&table->print, NULL);
+	init_philo(table);
+	return(0);
+}
+
+int		init_philo(t_t *table)
+{
+	int i;
+
+	i = 0;
+	while (i < table->nb_of_philo)
+	{
+		table->p[i].access_table = table;
+		table->p[i].nb_philo = i;
+		table->p[i].fork = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(table->p[i].fork, NULL);
+		pthread_mutex_lock(&table->print);
+		printf("Philo %d has started\n", i);
+		pthread_mutex_unlock(&table->print);
+		pthread_create(&table->p[i].philo, NULL, &routine, &table->p[i]);
+		i++;
+		pthread_detach(table->p[i].philo);
+	}
+	i = 0;
+	while (i < table->nb_of_philo)
+	{
+		if (pthread_join(table->p[i].philo, NULL) != 0)
+			return 2;
+		printf("Philo %d has finished exec\n", i);
+		i++;
+	}
+	return(0);
 }

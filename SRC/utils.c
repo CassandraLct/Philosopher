@@ -6,30 +6,11 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:43:00 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/04 14:33:53 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/05 13:30:25 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
-
-/*fonction autorisee:
-memset, printf, malloc, free, write,
-usleep, gettimeofday, pthread_create,
-pthread_detach, pthread_join, pthread_mutex_init,
-pthread_mutex_destroy,pthread_mutex_lock,
-pthread_mutex_unlock*/
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (i);
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int ft_atoi(const char *str)
 {
@@ -53,4 +34,36 @@ int ft_atoi(const char *str)
 		i++;
 	}
 	return(res * sign);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+int	check_digit(char **argv)
+{
+	int i;
+	int j;
+	
+	i = 1;
+	j = 0;
+	while(argv[i] != '\0')
+	{
+		while (argv[i][j] != '\0')
+		{
+			if (ft_isdigit(argv[i][j]) == 0)
+			{
+				printf("argv[%d] is not a digit\n", i);
+				return(1);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return(0);
 }

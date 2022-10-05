@@ -1,7 +1,7 @@
 CC 		= GCC
-CFLAGS	= -Wall -Werror -Wextra -pthread #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address -pthread
 NAME	= philo
-SRC		= src/main.c src/parse.c src/utils.c
+SRC		= src/main.c src/parse.c src/utils.c src/times.c
 
 OBJ		= $(SRC:.c=.o)
 
