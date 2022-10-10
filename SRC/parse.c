@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/05 15:50:36 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/10 14:56:23 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,6 @@ int	check_arg(int argc, char **argv)
 			return(1);
 	}
 	return(0);
-}
-
-//init fork left
-void fork_init(t_t table)
-{
-	int i;
-
-	i = 0;
-	/*while(i < table.nb_of_philo)
-	{
-		if (i == table.nb_of_philo - 1)
-			table.p[i].fork_left = table.p[0].fork;
-		else
-			table.p[i].fork_left = table.p[i + 1].fork;
-		i++;
-	}*/
 }
 
 // nb_of_philo ; time_to_die; time_to_eat ; time_to_sleep
@@ -70,11 +54,11 @@ int		init_philo(t_t *table)
 	{
 		table->p[i].access_table = table;
 		table->p[i].nb_philo = i;
+		table->p[i].nb_time_to_eat = 0;
+		table->p[i].time_before_dying = table->time_to_die;
 		table->p[i].fork = malloc(sizeof(pthread_mutex_t));
+		table->p[i].fork_left = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(table->p[i].fork, NULL);
-		pthread_mutex_lock(&table->print);
-		printf("Philo %d has started\n", i);
-		pthread_mutex_unlock(&table->print);
 		pthread_create(&table->p[i].philo, NULL, &routine, &table->p[i]);
 		i++;
 		pthread_detach(table->p[i].philo);
@@ -84,7 +68,6 @@ int		init_philo(t_t *table)
 	{
 		if (pthread_join(table->p[i].philo, NULL) != 0)
 			return 2;
-		printf("Philo %d has finished exec\n", i);
 		i++;
 	}
 	return(0);

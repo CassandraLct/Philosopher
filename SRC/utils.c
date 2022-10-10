@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:43:00 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/05 13:30:25 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/10 14:14:04 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,10 @@ int	check_digit(char **argv)
 		i++;
 	}
 	return(0);
+}
+
+//fonction d'affichage
+void	display(char *str)
+{
+	printf("%s\n", str);
 }

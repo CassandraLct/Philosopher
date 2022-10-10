@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:44:28 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/05 13:49:41 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/10 14:13:54 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,3 @@ void    ft_usleep(long time)
         usleep(time * 10);
 }
 
-//fonction d'affichage
-void	display(char *str)
-{
-	printf("%s\n", str);
-}
