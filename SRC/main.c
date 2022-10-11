@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/10 16:13:23 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/11 15:19:13 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,21 @@ pthread_mutex_unlock*/
 
 // routinephilo : manger, penser et dormir 
 // philo pense en attendant de pouvoir manger
+//faire la boucle et l'arreter des la premiere mort
 void	*routine(void *arg)
 {
 	t_phil	*philo;
 
 	philo = (t_phil *)arg;
-	ft_eat(*philo);
-	//check_death(*philo);
-	ft_sleep(*philo); //apres manger
-	ft_think(*philo); //think en attendant de pouvoir manger
+	while (check_death(*philo) != 1 || philo->nb_time_eat
+		<= philo->acs_tbl->nb_times_must_eat)
+	{
+		ft_eat(*philo);
+		ft_sleep(*philo);
+		ft_think(*philo);
+		if (check_death(*philo) == 1)
+			exit(0);
+	}
 	return (NULL);
 }
 
@@ -42,66 +48,62 @@ timestamp_in_ms X died*/
 void	ft_eat(t_phil philo)
 {
 	int	ret;
-	
+
 	ret = pthread_mutex_lock(philo.fork);
-	if(philo.nb_philo == philo.access_table->nb_of_philo - 1)
-		pthread_mutex_lock(philo.access_table->p[0].fork);
+	if (philo.nb_philo == philo.acs_tbl->nb_of_philo - 1)
+		pthread_mutex_lock(philo.acs_tbl->p[0].fork);
 	else
-		pthread_mutex_lock(philo.access_table->p[philo.nb_philo + 1].fork);
-	pthread_mutex_lock(&philo.access_table->print);
-	printf("%lld %d has taken a fork\n", (init_ms() - philo.access_table->time_of_day), philo.nb_philo);
-	printf("%lld %d is eating\n", (init_ms() - philo.access_table->time_of_day), philo.nb_philo);
-	pthread_mutex_unlock(&philo.access_table->print);
-	philo.nb_time_to_eat += 1;
-	ft_usleep(philo.access_table->time_to_eat);
-	printf("nbtimetoeat1 = %d\n", philo.time_before_dying);
-	philo.time_before_dying = (philo.time_before_dying + philo.access_table->time_to_eat);
-	printf("nbtimetoeat2 = %d\n", philo.time_before_dying);
+		pthread_mutex_lock(philo.acs_tbl->p[philo.nb_philo + 1].fork);
+	pthread_mutex_lock(&philo.acs_tbl->print);
+	printf("%lld %d has taken a fork\n",
+		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo);
+	printf("%lld %d is eating\n",
+		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo);
+	pthread_mutex_unlock(&philo.acs_tbl->print);
+	philo.nb_time_eat += 1;
+	ft_usleep(philo.acs_tbl->time_eat);
+	philo.time_bfr_die = (philo.acs_tbl->time_die + (init_ms() - philo.acs_tbl->time_day));
 	pthread_mutex_unlock(philo.fork);
-	if(philo.nb_philo == philo.access_table->nb_of_philo - 1)
-		pthread_mutex_unlock(philo.access_table->p[0].fork);
+	if (philo.nb_philo == philo.acs_tbl->nb_of_philo - 1)
+		pthread_mutex_unlock(philo.acs_tbl->p[0].fork);
 	else
-		pthread_mutex_unlock(philo.access_table->p[philo.nb_philo + 1].fork);
+		pthread_mutex_unlock(philo.acs_tbl->p[philo.nb_philo + 1].fork);
+	if (check_death(philo) == 1)
+		exit(0);
 }
 
 void	ft_sleep(t_phil philo)
 {
-	pthread_mutex_lock(&philo.access_table->print);
-	printf("%lld %d is sleeping\n", (init_ms() - philo.access_table->time_of_day), philo.nb_philo);
-	pthread_mutex_unlock(&philo.access_table->print);
-	ft_usleep(philo.access_table->time_to_sleep);
-}
-
-void	ft_think(t_phil philo)
-{
-	pthread_mutex_lock(&philo.access_table->print);
-	printf("%lld %d is thinking\n", (init_ms() - philo.access_table->time_of_day), philo.nb_philo);
-	pthread_mutex_unlock(&philo.access_table->print);
+	pthread_mutex_lock(&philo.acs_tbl->print);
+	printf("%lld %d is sleeping\n", (init_ms() - philo.acs_tbl->time_day),
+		philo.nb_philo);
+	pthread_mutex_unlock(&philo.acs_tbl->print);
+	ft_usleep(philo.acs_tbl->time_sleep);
 }
 
 //si le philo n'a fait qu'attendre car impossibilite de manger
-int		check_death(t_phil philo)
+//faire un check_death pour verifier si le philo meure pendant qu'il mange
+//et en dehors aussi pour quand il attend
+int	check_death(t_phil philo)
 {
-	printf("w = %lld\n", (init_ms() - philo.access_table->time_of_day));
-	if(philo.time_before_dying)
+	printf("timebfrdie2 = %d, timeday = %lld\n", philo.time_bfr_die, (init_ms() - philo.acs_tbl->time_day));
+	if ((philo.time_bfr_die + 10) < (init_ms() - philo.acs_tbl->time_day))
 	{
-		pthread_mutex_lock(&philo.access_table->print);
-		printf("%lld %d died\n", (init_ms() - philo.access_table->time_of_day), philo.nb_philo);
-		return(1);
+		pthread_mutex_lock(&philo.acs_tbl->print);
+		printf("%lld %d died\n", (init_ms() - philo.acs_tbl->time_day),
+			philo.nb_philo);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
-
-//./philo 4 800 200 200
-//4 nb_philo 800 timetodie 200 timetoeat 200 timetosleep
 int	main(int argc, char **argv)
 {
-	t_t table;
+	t_t	table;
 
-	if(check_arg(argc, argv) == 1)
-		return(1);
+	if (check_arg(argc, argv) == 1)
+		return (1);
 	init_struct(&table, argv);
-	//free(table.p.philo);
+	free(table.p->philo);
 	return (0);
 }

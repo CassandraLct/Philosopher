@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/10 14:52:37 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/11 13:47:09 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-//struct philo
-typedef struct	s_phil 
+//struct philo acs tbl = accesstable
+typedef struct s_phil
 {
-	pthread_t philo;
-	int nb_fork;
-	int nb_time_to_eat;
-	int nb_philo;
-	int time_before_dying;
-	pthread_mutex_t *fork;
-	pthread_mutex_t *fork_left;
-	struct s_t *access_table;
+	pthread_t		philo;
+	int				nb_fork;
+	int				nb_time_eat;
+	int				nb_philo;
+	int				time_bfr_die;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*fork_left;
+	struct s_t		*acs_tbl;
 }	t_phil;
 
 //structure generale
 typedef struct s_t
 {
-    int 		nb_of_philo;
-    int 		nb_of_fork;
-	int 		time_to_eat;
-	int 		time_to_sleep;
-	int			time_to_die;
-	int			nb_of_times_each_philo_must_eat;
-	long long	time_of_day;
-	pthread_mutex_t print;
-	t_phil	*p;
-} 	t_t;
+	int				nb_of_philo;
+	int				nb_of_fork;
+	int				time_eat;
+	int				time_sleep;
+	int				time_die;
+	int				nb_times_must_eat;
+	long long		time_day;
+	pthread_mutex_t	print;
+	t_phil			*p;
+}	t_t;
 
 int		check_arg(int argc, char **argv);
 int		check_digit(char **argv);
@@ -55,8 +55,8 @@ int		init_struct(t_t *table, char **argv);
 void	*routine(void *arg);
 int		ft_isdigit(int c);
 int		init_philo(t_t *table);
-long    init_ms(void);
-void    ft_usleep(long time);
+long	init_ms(void);
+void	ft_usleep(long time);
 void	ft_eat(t_phil philo);
 void	ft_sleep(t_phil philo);
 void	ft_think(t_phil philo);
