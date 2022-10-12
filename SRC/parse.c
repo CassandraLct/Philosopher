@@ -6,12 +6,12 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/11 13:47:24 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 13:30:31 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
-// 3 fonctions
+// 4 fonctions
 
 int	check_arg(int argc, char **argv)
 {
@@ -38,6 +38,9 @@ int	init_struct(t_t *table, char **argv)
 	table->time_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		table->nb_times_must_eat = ft_atoi(argv[5]);
+	else
+		table->nb_times_must_eat = 0;
+	printf("must eat %d times\n", table->nb_times_must_eat);
 	table->nb_of_fork = table->nb_of_philo;
 	table->time_day = init_ms();
 	table->p = malloc(sizeof(t_phil) * table->nb_of_philo);
@@ -56,9 +59,8 @@ int	init_philo(t_t *table)
 		table->p[i].acs_tbl = table;
 		table->p[i].nb_philo = i;
 		table->p[i].nb_time_eat = 0;
-		table->p[i].time_bfr_die = table->time_die;
+		table->p[i].timebfrdie = table->time_die;
 		table->p[i].fork = malloc(sizeof(pthread_mutex_t));
-		table->p[i].fork_left = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(table->p[i].fork, NULL);
 		pthread_create(&table->p[i].philo, NULL, &routine, &table->p[i]);
 		i++;
@@ -78,6 +80,6 @@ void	ft_think(t_phil philo)
 {
 	pthread_mutex_lock(&philo.acs_tbl->print);
 	printf("%lld %d is thinking\n",
-		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo);
+		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo + 1);
 	pthread_mutex_unlock(&philo.acs_tbl->print);
 }

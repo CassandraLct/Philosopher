@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/11 13:47:09 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 13:22:58 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ typedef struct s_phil
 	int				nb_fork;
 	int				nb_time_eat;
 	int				nb_philo;
-	int				time_bfr_die;
+	int				timebfrdie;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	*fork_left;
 	struct s_t		*acs_tbl;
 }	t_phil;
 
@@ -57,9 +56,11 @@ int		ft_isdigit(int c);
 int		init_philo(t_t *table);
 long	init_ms(void);
 void	ft_usleep(long time);
-void	ft_eat(t_phil philo);
+int		ft_eat(t_phil philo);
 void	ft_sleep(t_phil philo);
 void	ft_think(t_phil philo);
 int		check_death(t_phil philo);
+void	free_philo(t_t table);
+void	routines(t_phil philo);
 
 #endif

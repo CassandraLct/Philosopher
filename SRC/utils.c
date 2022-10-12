@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:43:00 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/11 13:14:58 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 12:53:05 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,15 @@ int	check_digit(char **argv)
 	return (0);
 }
 
-//fonction d'affichage
-void	display(char *str)
+void	free_philo(t_t table)
 {
-	printf("%s\n", str);
+	int	i;
+
+	i = 0;
+	while (i < table.nb_of_philo)
+	{
+		free(table.p[i].fork);
+		i++;
+	}
+	free(table.p);
 }
