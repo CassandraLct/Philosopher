@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:44:28 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 13:22:30 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 14:25:11 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,4 @@ void	ft_usleep(long time)
 	start_time = init_ms();
 	while (init_ms() - start_time < time)
 		usleep(time * 10);
-}
-
-void	routines(t_phil philo)
-{
-	int ret;
-	
-	if (check_death(philo) == 1)
-		exit(0);
-	ret = ft_eat(philo);
-	philo.timebfrdie += ret;
-	if (check_death(philo) == 1)
-		exit(0);
-	ft_sleep(philo);
-	ft_think(philo);
-	if (check_death(philo) == 1)
-		exit(0);
 }

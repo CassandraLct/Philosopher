@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 13:30:31 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 14:42:41 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int	init_struct(t_t *table, char **argv)
 	table->time_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		table->nb_times_must_eat = ft_atoi(argv[5]);
-	else
-		table->nb_times_must_eat = 0;
-	printf("must eat %d times\n", table->nb_times_must_eat);
 	table->nb_of_fork = table->nb_of_philo;
 	table->time_day = init_ms();
 	table->p = malloc(sizeof(t_phil) * table->nb_of_philo);

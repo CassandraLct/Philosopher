@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 13:22:58 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 15:10:45 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-//struct philo acs tbl = accesstable
+//struct philo
 typedef struct s_phil
 {
 	pthread_t		philo;
@@ -61,6 +61,5 @@ void	ft_sleep(t_phil philo);
 void	ft_think(t_phil philo);
 int		check_death(t_phil philo);
 void	free_philo(t_t table);
-void	routines(t_phil philo);
 
 #endif

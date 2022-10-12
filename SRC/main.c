@@ -6,13 +6,13 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 13:31:13 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/12 15:04:04 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
 
-/*fonction autorisee : memset, printf, malloc, free, write,
+/*autorisee: memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
 pthread_detach, pthread_join, pthread_mutex_init,
 pthread_mutex_destroy, pthread_mutex_lock,
@@ -21,25 +21,11 @@ pthread_mutex_unlock*/
 void	*routine(void *arg)
 {
 	t_phil	*philo;
-	//int ret;
+	int		ret;
 
 	philo = (t_phil *)arg;
-	if(philo->acs_tbl->nb_times_must_eat > 0)
-	{
-		printf("must eat == %d\n", philo->acs_tbl->nb_times_must_eat);
-		while(philo->nb_time_eat < philo->acs_tbl->nb_times_must_eat)
-		{
-			routines(*philo);
-			philo->nb_time_eat++;
-		}
-	}
-	else
-	{
-		while(check_death(*philo) != 1)
-			routines(*philo);
-	}
-	/*while (check_death(*philo) != 1 && philo->nb_time_eat
-		< philo->acs_tbl->nb_times_must_eat)
+	usleep(100);
+	while (1)
 	{
 		if (check_death(*philo) == 1)
 			exit(0);
@@ -48,11 +34,15 @@ void	*routine(void *arg)
 		if (check_death(*philo) == 1)
 			exit(0);
 		ft_sleep(*philo);
+		if (check_death(*philo) == 1)
+			exit(0);
 		ft_think(*philo);
 		if (check_death(*philo) == 1)
 			exit(0);
 		philo->nb_time_eat++;
-	}*/
+		if (philo->nb_time_eat == philo->acs_tbl->nb_times_must_eat)
+			exit(0);
+	}
 	return (NULL);
 }
 
@@ -71,6 +61,8 @@ int	ft_eat(t_phil ph)
 	pthread_mutex_unlock(&ph.acs_tbl->print);
 	ph.nb_time_eat += 1;
 	ft_usleep(ph.acs_tbl->time_eat);
+	if (check_death(ph) == 1)
+		exit(0);
 	ph.timebfrdie = (ph.acs_tbl->time_die + (init_ms() - ph.acs_tbl->time_day));
 	pthread_mutex_unlock(ph.fork);
 	if (ph.nb_philo == ph.acs_tbl->nb_of_philo - 1)
@@ -96,7 +88,7 @@ int	check_death(t_phil philo)
 	if ((philo.timebfrdie) < (init_ms() - philo.acs_tbl->time_day))
 	{
 		pthread_mutex_lock(&philo.acs_tbl->print);
-		printf("%lld %d died\n", (init_ms() - philo.acs_tbl->time_day),
+		printf("%lld %d died\n", ((init_ms() - philo.acs_tbl->time_day)),
 			philo.nb_philo + 1);
 		return (1);
 	}
@@ -110,8 +102,6 @@ int	main(int argc, char **argv)
 	if (check_arg(argc, argv) == 1)
 		return (1);
 	init_struct(&table, argv);
-	//free_philo(table);
+	free_philo(table);
 	return (0);
 }
-
-// tous ce qui est malloc : table->p ; table->p[i].fork
