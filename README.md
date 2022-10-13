@@ -15,7 +15,7 @@ Enfin, lorsqu’ils pensent, ils ne peuvent pas manger ou dormir.
  • Les philosophes ne peuvent pas savoir si l’un d’entre eux est sur le point de mourir.
  • Inutile de préciser que les philosophes ne doivent pas mourir !
  
- >>>>>>>Règles communes<<<<<<<<
+>>>>>>>Règles communes<<<<<<<<
 Vous devez faire un programme pour la partie obligatoire et, dans le cas où vous choi- sissez aussi de faire les bonus, un programme pour 
 la partie bonus. Ces deux programmes doivent respecter les règles suivantes, communes aux deux parties :
 • Les variables globales sont interdites !
