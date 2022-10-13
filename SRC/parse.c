@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 14:42:41 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/13 11:21:12 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,4 @@ void	ft_think(t_phil philo)
 		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo + 1);
 	pthread_mutex_unlock(&philo.acs_tbl->print);
 }
+//if nb_philo == 1 philo die car pas de deuxieme fourchette
