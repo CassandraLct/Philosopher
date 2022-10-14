@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/13 11:21:12 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/14 11:56:12 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	init_philo(t_t *table)
 		table->p[i].timebfrdie = table->time_die;
 		table->p[i].fork = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(table->p[i].fork, NULL);
+		pthread_mutex_init(&table->print, NULL);
 		pthread_create(&table->p[i].philo, NULL, &routine, &table->p[i]);
 		i++;
 		pthread_detach(table->p[i].philo);
@@ -70,6 +71,11 @@ int	init_philo(t_t *table)
 			return (2);
 		i++;
 	}
+	/*if(table->nb_of_philo == 1) // a regler
+	{
+		pthread_mutex_lock(&table->print);
+		printf("%ld %d died", (init_ms() - table->time_die), table->p->nb_philo + 1);
+	}*/
 	return (0);
 }
 
