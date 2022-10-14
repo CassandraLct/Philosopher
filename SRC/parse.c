@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/14 11:56:12 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/14 12:33:25 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	check_arg(int argc, char **argv)
 // nb_of_philo ; time_die; time_eat ; time_sleep
 int	init_struct(t_t *table, char **argv)
 {
-	table->nb_of_philo = ft_atoi(argv[1]);
+	/*if((table->nb_of_philo = ft_atoi(argv[1])) == 1) // a essayer
+	{
+		printf("")
+	}*/
 	table->time_die = ft_atoi(argv[2]);
 	table->time_eat = ft_atoi(argv[3]);
 	table->time_sleep = ft_atoi(argv[4]);
