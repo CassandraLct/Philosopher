@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/17 11:12:23 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 14:12:49 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ void	*routine(void *arg)
 			exit(0);
 		ret = ft_eat(*philo);
 		philo->timebfrdie += ret;
+		//printf("test0 %d\n", philo->nb_philo);
 		if (check_death(*philo) == 1)
 			exit(0);
+		//printf("test01 %d\n", philo->nb_philo);
 		ft_sleep(*philo);
+		//printf("test1 %d\n", philo->nb_philo);
 		if (check_death(*philo) == 1)
 			exit(0);
+		//printf("test2 %d\n", philo->nb_philo);
 		ft_think(*philo);
 		if (check_death(*philo) == 1)
 			exit(0);
+		//printf("test3 %d\n", philo->nb_philo);
 		philo->nb_time_eat++;
 		if (philo->nb_time_eat == philo->acs_tbl->nb_times_must_eat)
 			exit(0);
@@ -61,18 +66,23 @@ int	ft_eat(t_phil ph)
 	printf("%lld %d is eating\n",
 		(init_ms() - ph.acs_tbl->time_day), ph.nb_philo + 1);
 	pthread_mutex_unlock(&ph.acs_tbl->print);
-	ph.nb_time_eat += 1;
+	//ph.nb_time_eat += 1;
+	//printf(" oui %d\n", ph.nb_philo);
 	ft_usleep(ph.acs_tbl->time_eat);
+	//printf("test1111%d\n", ph.nb_philo);
 	if (check_death(ph) == 1)
 		exit(0);
+	//printf("tes22222%d\n", ph.nb_philo);
 	ph.timebfrdie = (ph.acs_tbl->time_die + (init_ms() - ph.acs_tbl->time_day));
 	pthread_mutex_unlock(ph.fork);
+	//printf("tes33333%d\n", ph.nb_philo);
 	if (ph.nb_philo == ph.acs_tbl->nb_of_philo - 1)
 		pthread_mutex_unlock(ph.acs_tbl->p[0].fork);
 	else
 		pthread_mutex_unlock(ph.acs_tbl->p[ph.nb_philo + 1].fork);
 	if (check_death(ph) == 1)
 		exit(0);
+	//printf("tes4444444 %d\n", ph.nb_philo);
 	return (ph.timebfrdie);
 }
 
@@ -87,7 +97,7 @@ void	ft_sleep(t_phil philo)
 
 int	check_death(t_phil philo)
 {
-	if ((philo.timebfrdie + 10) < (init_ms() - philo.acs_tbl->time_day))
+	if ((philo.timebfrdie) < (init_ms() - philo.acs_tbl->time_day))
 	{
 		pthread_mutex_lock(&philo.acs_tbl->print);
 		printf("%lld %d died\n", ((init_ms() - philo.acs_tbl->time_day)),
@@ -107,3 +117,5 @@ int	main(int argc, char **argv)
 	free_philo(table);
 	return (0);
 }
+
+// pour philo 2 400 150 300 : 2 doit mourir
