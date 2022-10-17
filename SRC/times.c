@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:44:28 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 14:25:11 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 10:22:46 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ long	init_ms(void)
 	return (ms);
 }
 
-// le philo attend pendant x temp
 void	ft_usleep(long time)
 {
 	long	start_time;

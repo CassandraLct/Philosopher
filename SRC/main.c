@@ -6,13 +6,14 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/17 10:07:26 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 11:12:23 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
 
-//chose a faire : regler soucis philo 1 et d'affichage, recherche bonus ; usleep(200);
+//chose a faire : regler soucis philo 1 et d'affichage,
+//recherche bonus ; usleep(200);
 /*autorisee: memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
 pthread_detach, pthread_join, pthread_mutex_init,
@@ -24,7 +25,8 @@ void	*routine(void *arg)
 	int		ret;
 
 	philo = (t_phil *)arg;
-	usleep(200);
+	if ((philo->nb_philo % 2) != 0)
+		usleep(200);
 	while (1)
 	{
 		if (check_death(*philo) == 1)
@@ -85,7 +87,7 @@ void	ft_sleep(t_phil philo)
 
 int	check_death(t_phil philo)
 {
-	if ((philo.timebfrdie) < (init_ms() - philo.acs_tbl->time_day))
+	if ((philo.timebfrdie + 10) < (init_ms() - philo.acs_tbl->time_day))
 	{
 		pthread_mutex_lock(&philo.acs_tbl->print);
 		printf("%lld %d died\n", ((init_ms() - philo.acs_tbl->time_day)),
