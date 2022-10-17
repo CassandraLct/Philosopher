@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/14 12:33:38 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 10:07:26 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ void	*routine(void *arg)
 
 	philo = (t_phil *)arg;
 	usleep(200);
-	/*if(philo->acs_tbl->nb_of_philo == 1) // essayer mais boucle infini
-	{
-		pthread_mutex_lock(&philo->acs_tbl->print);
-		printf("%ld %d died", (init_ms() - philo->acs_tbl->time_die), philo->nb_philo + 1);
-	}*/
 	while (1)
 	{
 		if (check_death(*philo) == 1)

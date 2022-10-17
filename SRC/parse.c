@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/14 12:33:25 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 10:07:05 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	check_arg(int argc, char **argv)
 // nb_of_philo ; time_die; time_eat ; time_sleep
 int	init_struct(t_t *table, char **argv)
 {
-	/*if((table->nb_of_philo = ft_atoi(argv[1])) == 1) // a essayer
-	{
-		printf("")
-	}*/
+	table->nb_of_philo = ft_atoi(argv[1]);
 	table->time_die = ft_atoi(argv[2]);
 	table->time_eat = ft_atoi(argv[3]);
 	table->time_sleep = ft_atoi(argv[4]);
@@ -45,6 +42,12 @@ int	init_struct(t_t *table, char **argv)
 	table->time_day = init_ms();
 	table->p = malloc(sizeof(t_phil) * table->nb_of_philo);
 	pthread_mutex_init(&table->print, NULL);
+	if(table->nb_of_philo == 1)
+	{
+		pthread_mutex_lock(&table->print);
+		printf("%ld %d died", (init_ms() - (init_ms() - table->time_die)), table->nb_of_philo);
+		exit(0);
+	}
 	init_philo(table);
 	return (0);
 }
@@ -62,7 +65,6 @@ int	init_philo(t_t *table)
 		table->p[i].timebfrdie = table->time_die;
 		table->p[i].fork = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(table->p[i].fork, NULL);
-		pthread_mutex_init(&table->print, NULL);
 		pthread_create(&table->p[i].philo, NULL, &routine, &table->p[i]);
 		i++;
 		pthread_detach(table->p[i].philo);
@@ -74,11 +76,6 @@ int	init_philo(t_t *table)
 			return (2);
 		i++;
 	}
-	/*if(table->nb_of_philo == 1) // a regler
-	{
-		pthread_mutex_lock(&table->print);
-		printf("%ld %d died", (init_ms() - table->time_die), table->p->nb_philo + 1);
-	}*/
 	return (0);
 }
 
@@ -89,4 +86,3 @@ void	ft_think(t_phil philo)
 		(init_ms() - philo.acs_tbl->time_day), philo.nb_philo + 1);
 	pthread_mutex_unlock(&philo.acs_tbl->print);
 }
-//if nb_philo == 1 philo die car pas de deuxieme fourchette
