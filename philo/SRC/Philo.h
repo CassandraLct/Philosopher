@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/12 15:10:45 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/17 16:40:17 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_phil
 	int				nb_fork;
 	int				nb_time_eat;
 	int				nb_philo;
-	int				timebfrdie;
+	long			timebfrdie;
 	pthread_mutex_t	*fork;
 	struct s_t		*acs_tbl;
 }	t_phil;
