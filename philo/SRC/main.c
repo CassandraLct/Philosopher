@@ -6,14 +6,12 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/17 16:42:21 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/18 16:07:47 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philo.h"
 
-//chose a faire : regler soucis philo 1 et d'affichage,
-//recherche bonus ; usleep(200);
 /*autorisee: memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
 pthread_detach, pthread_join, pthread_mutex_init,
@@ -32,7 +30,7 @@ void	*routine(void *arg)
 		if (check_death(*philo) == 1)
 			exit(0);
 		ret = ft_eat(*philo);
-		philo->timebfrdie += ret;
+		philo->timebfrdie = ret;
 		if (check_death(*philo) == 1)
 			exit(0);
 		ft_sleep(*philo);
@@ -62,11 +60,9 @@ int	ft_eat(t_phil ph)
 		(init_ms() - ph.acs_tbl->time_day), ph.nb_philo + 1);
 	pthread_mutex_unlock(&ph.acs_tbl->print);
 	ft_usleep(ph.acs_tbl->time_eat);
-	printf("timebfrdie in eatttttt= %ld, time-day = %lld\n", ph.timebfrdie, (init_ms() - ph.acs_tbl->time_day));
 	if (check_death(ph) == 1)
 		exit(0);
-	ph.timebfrdie = (ph.acs_tbl->time_die + (init_ms() - ph.acs_tbl->time_day));
-	printf("timebfrdie = %ld", ph.timebfrdie);
+	ph.timebfrdie = (ph.acs_tbl->time_die +(init_ms() - ph.acs_tbl->time_day));
 	if (check_death(ph) == 1)
 		exit(0);
 	pthread_mutex_unlock(ph.fork);
@@ -111,5 +107,4 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// pour philo 2 400 150 300 : 2 doit mourir
-//timebfrdie mal affecter!
+//dernier soucis a regler: le dernier thinking ne s'affiche pas!
