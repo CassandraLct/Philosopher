@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/20 13:36:35 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/20 16:21:15 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	ft_eat(t_phil ph)
 		(init_ms() - ph.acs_tbl->time_day), ph.nb_philo + 1);
 	pthread_mutex_unlock(&ph.acs_tbl->print);
 	ft_usleep(ph.acs_tbl->time_eat);
+	if (check_death(ph) == 1)
+		exit(0);
 	ph.timebfrdie = (ph.acs_tbl->time_die + (init_ms() - ph.acs_tbl->time_day));
 	if (check_death(ph) == 1)
 		exit (0);
@@ -104,5 +106,3 @@ int	main(int argc, char **argv)
 	free_philo(table);
 	return (0);
 }
-
-//dernier soucis a regler: le dernier thinking ne s'affiche pas!

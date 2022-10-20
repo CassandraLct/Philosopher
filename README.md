@@ -73,3 +73,10 @@ _________Partie BONUS_________
 		est représenté par un sémaphore.
 	• Chaque philosophe est représenté par un processus différent. Cependant, le processus principal
 		ne doit pas être un philosophe.
+
+pour optimiser le philo au debut du sleep
+if (time bfr die < (init_ms() - philo.acs_tbl->time_day) + time_sleep)
+{
+	le philo va mourir
+	on doit afficher le time bfrdie apres que les autres philos aient fait leurs actions precedent le timebfr die du philo actuel
+}
