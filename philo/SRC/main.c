@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/20 13:22:58 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/20 13:36:35 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_eat(t_phil ph)
 		(init_ms() - ph.acs_tbl->time_day), ph.nb_philo + 1);
 	pthread_mutex_unlock(&ph.acs_tbl->print);
 	ft_usleep(ph.acs_tbl->time_eat);
-	ph.timebfrdie = (ph.acs_tbl->time_die +(init_ms() - ph.acs_tbl->time_day));
+	ph.timebfrdie = (ph.acs_tbl->time_die + (init_ms() - ph.acs_tbl->time_day));
 	if (check_death(ph) == 1)
 		exit (0);
 	pthread_mutex_unlock(ph.fork);
