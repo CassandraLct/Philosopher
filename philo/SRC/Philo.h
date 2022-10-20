@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:31:42 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/17 16:40:17 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/20 12:34:10 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_t
 	int				time_die;
 	int				nb_times_must_eat;
 	long long		time_day;
+	int				philo_died;
 	pthread_mutex_t	print;
 	t_phil			*p;
 }	t_t;

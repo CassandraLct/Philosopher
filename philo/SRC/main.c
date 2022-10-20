@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/18 16:07:47 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/20 13:22:58 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,16 @@ void	*routine(void *arg)
 	t_phil	*philo;
 	int		ret;
 
+	usleep(500);
 	philo = (t_phil *)arg;
-	if ((philo->nb_philo % 2) != 0)
+	if ((philo->nb_philo % 2) == 1)
 		usleep(200);
 	while (1)
 	{
-		if (check_death(*philo) == 1)
-			exit(0);
 		ret = ft_eat(*philo);
 		philo->timebfrdie = ret;
-		if (check_death(*philo) == 1)
-			exit(0);
 		ft_sleep(*philo);
+		ft_usleep(0);
 		if (check_death(*philo) == 1)
 			exit(0);
 		ft_think(*philo);
@@ -60,18 +58,14 @@ int	ft_eat(t_phil ph)
 		(init_ms() - ph.acs_tbl->time_day), ph.nb_philo + 1);
 	pthread_mutex_unlock(&ph.acs_tbl->print);
 	ft_usleep(ph.acs_tbl->time_eat);
-	if (check_death(ph) == 1)
-		exit(0);
 	ph.timebfrdie = (ph.acs_tbl->time_die +(init_ms() - ph.acs_tbl->time_day));
 	if (check_death(ph) == 1)
-		exit(0);
+		exit (0);
 	pthread_mutex_unlock(ph.fork);
 	if (ph.nb_philo == ph.acs_tbl->nb_of_philo - 1)
 		pthread_mutex_unlock(ph.acs_tbl->p[0].fork);
 	else
 		pthread_mutex_unlock(ph.acs_tbl->p[ph.nb_philo + 1].fork);
-	if (check_death(ph) == 1)
-		exit(0);
 	return (ph.timebfrdie);
 }
 
@@ -86,13 +80,17 @@ void	ft_sleep(t_phil philo)
 
 int	check_death(t_phil philo)
 {
-	if ((philo.timebfrdie) < (init_ms() - philo.acs_tbl->time_day))
+	if ((philo.timebfrdie) < (init_ms() - philo.acs_tbl->time_day)
+		&& philo.acs_tbl->philo_died != 1)
 	{
+		philo.acs_tbl->philo_died = 1;
 		pthread_mutex_lock(&philo.acs_tbl->print);
 		printf("%lld %d died\n", ((init_ms() - philo.acs_tbl->time_day)),
 			philo.nb_philo + 1);
 		return (1);
 	}
+	if (philo.acs_tbl->philo_died == 1)
+		return (1);
 	return (0);
 }
 
