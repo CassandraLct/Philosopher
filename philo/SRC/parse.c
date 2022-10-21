@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/20 12:34:07 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/21 10:46:26 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ int	init_philo(t_t *table)
 	}
 	return (0);
 }
+/*pthread_detach sert a detaché le thread et garantit que les ressources
+mémoires seront immédiatement libérés lorsque l'execution du thread sera terminé
+et cela empeche les autres threads de se synchroniser sur la mort du thread avec
+pthread_join*/
 
 void	ft_think(t_phil philo)
 {
