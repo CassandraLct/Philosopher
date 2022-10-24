@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:23:16 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/20 16:21:15 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/24 16:36:14 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*routine(void *arg)
 			exit(0);
 		philo->nb_time_eat++;
 		if (philo->nb_time_eat == philo->acs_tbl->nb_times_must_eat)
-			exit(0);
+			return (0);
 	}
 	return (NULL);
 }

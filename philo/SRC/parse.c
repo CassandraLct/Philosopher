@@ -6,7 +6,7 @@
 /*   By: clecat <clecat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:30:08 by clecat            #+#    #+#             */
-/*   Updated: 2022/10/21 10:46:26 by clecat           ###   ########.fr       */
+/*   Updated: 2022/10/24 15:33:48 by clecat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,20 @@
 int	check_arg(int argc, char **argv)
 {
 	if (argc == 1)
+	{
 		printf("Error -> no arg\n");
+		return (1);
+	}
 	if (argc < 5)
+	{
 		printf("Missing arguments\n");
+		return (1);
+	}
 	else if (argc > 6)
+	{
 		printf("Too much arguments\n");
+		return(1);
+	}
 	else
 	{
 		if (check_digit(argv) == 1)
